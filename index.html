@@ -33,8 +33,9 @@
         /* Style pour le bouton "Voir mon site" */
         #siteBtn {
             display: block;
-            margin-left: auto; /* Placer à droite */
-            margin-top: 0; /* Alignement avec le titre */
+            float: right; /* Aligner à droite */
+            margin-top: -40px; /* Décalage vers le haut pour le positionnement */
+            margin-right: 20px; /* Marge à droite */
             padding: 5px 10px; /* Taille plus petite */
             background-color: #333;
             color: #fff;
@@ -67,9 +68,7 @@
         }
         /* Conteneur pour le titre et le bouton "Voir mon site" */
         #titleContainer {
-            display: flex;
-            justify-content: space-between; /* Espacement égal entre les éléments */
-            align-items: center; /* Alignement vertical */
+            position: relative; /* Position relative pour positionner le bouton */
         }
     </style>
 </head>
@@ -85,10 +84,13 @@
 <div id="main">
 
     <header class="container">
-        <!-- Conteneur pour le titre et le bouton "Voir mon site" -->
+        <!-- Bouton "Voir mon site" -->
+        <a href="https://quevilly.github.io/Moulin-page/" id="siteBtn" class="button">Voir mon site</a>
+        <!-- Titre "Formation pour devenir coach professionnel" -->
         <div id="titleContainer">
             <h2>Formation pour devenir coach professionnel</h2>
-            <a href="https://quevilly.github.io/Moulin-page/" id="siteBtn" class="button">Voir mon site</a>
+            <!-- Bouton Inscription -->
+            <button id="inscriptionBtn" class="button">Inscription</button>
         </div>
     </header>
 
@@ -109,9 +111,6 @@
             <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
         </section>
     </div>
-
-    <!-- Insérer le bouton Inscription -->
-    <button id="inscriptionBtn" class="button">Inscription</button>
 
     <!-- Insérer le formulaire Google ici -->
     <div class="container hidden" id="formContainer">
@@ -152,4 +151,7 @@
             formContainer.classList.add('hidden');
         }
     });
-</script
+</script>
+
+</body>
+</html>
