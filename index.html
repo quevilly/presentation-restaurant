@@ -17,7 +17,7 @@
             height: auto;
         }
         /* Style pour le bouton Inscription */
-        .button {
+        #inscriptionBtn {
             display: block;
             margin: 20px auto;
             padding: 10px 20px;
@@ -27,24 +27,6 @@
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
-            text-decoration: none; /* Supprimer le soulignement du lien */
-            text-align: center; /* Centrer le texte */
-        }
-        /* Style pour le bouton "Voir mon site" */
-        #siteBtn {
-            display: block;
-            float: right; /* Aligner à droite */
-            margin-top: -40px; /* Décalage vers le haut pour le positionnement */
-            margin-right: 20px; /* Marge à droite */
-            padding: 5px 10px; /* Taille plus petite */
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px; /* Taille plus petite */
-            cursor: pointer;
-            text-decoration: none; /* Supprimer le soulignement du lien */
-            text-align: center; /* Centrer le texte */
         }
         /* Ajouter une classe pour masquer le formulaire */
         .hidden {
@@ -66,10 +48,6 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        /* Conteneur pour le titre et le bouton "Voir mon site" */
-        #titleContainer {
-            position: relative; /* Position relative pour positionner le bouton */
-        }
     </style>
 </head>
 <body>
@@ -84,14 +62,7 @@
 <div id="main">
 
     <header class="container">
-        <!-- Bouton "Voir mon site" -->
-        <a href="https://quevilly.github.io/Moulin-page/" id="siteBtn" class="button">Voir mon site</a>
-        <!-- Titre "Formation pour devenir coach professionnel" -->
-        <div id="titleContainer">
-            <h2>Formation pour devenir coach professionnel</h2>
-            <!-- Bouton Inscription -->
-            <button id="inscriptionBtn" class="button">Inscription</button>
-        </div>
+        <h2>Formation pour devenir coach professionnel</h2>
     </header>
 
     <div class="container">
@@ -111,6 +82,9 @@
             <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
         </section>
     </div>
+
+    <!-- Insérer le bouton Inscription -->
+    <button id="inscriptionBtn">Inscription</button>
 
     <!-- Insérer le formulaire Google ici -->
     <div class="container hidden" id="formContainer">
