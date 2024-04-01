@@ -16,8 +16,8 @@
             max-width: 100%;
             height: auto;
         }
-        /* Style pour le bouton Inscription */
-        #inscriptionBtn {
+        /* Style pour le bouton Inscription et Voir mon site */
+        .button {
             display: block;
             margin: 20px auto;
             padding: 10px 20px;
@@ -27,6 +27,8 @@
             border-radius: 5px;
             font-size: 18px;
             cursor: pointer;
+            text-decoration: none; /* Supprimer le soulignement du lien */
+            text-align: center; /* Centrer le texte */
         }
         /* Ajouter une classe pour masquer le formulaire */
         .hidden {
@@ -61,6 +63,9 @@
 <!-- Main -->
 <div id="main">
 
+    <!-- Bouton "Voir mon site" -->
+    <a href="https://quevilly.github.io/Moulin-page/" class="button">Voir mon site</a>
+
     <header class="container">
         <h2>Formation pour devenir coach professionnel</h2>
     </header>
@@ -84,7 +89,7 @@
     </div>
 
     <!-- Insérer le bouton Inscription -->
-    <button id="inscriptionBtn">Inscription</button>
+    <button id="inscriptionBtn" class="button">Inscription</button>
 
     <!-- Insérer le formulaire Google ici -->
     <div class="container hidden" id="formContainer">
