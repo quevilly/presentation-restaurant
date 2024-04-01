@@ -32,6 +32,11 @@
         .hidden {
             display: none;
         }
+        /* Centrer le formulaire */
+        #formContainer {
+            margin: 0 auto;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -51,25 +56,19 @@
 
     <div class="container">
         <section>
+            <h3>Les bases du coaching</h3>
             <img src="images/pic01.jpg" alt="" />
-            <div>
-                <h3>Les bases du coaching</h3>
-                <p>Apprenez les principes fondamentaux du coaching et développez vos compétences pour accompagner vos clients vers leurs objectifs.</p>
-            </div>
+            <p>Apprenez les principes fondamentaux du coaching et développez vos compétences pour accompagner vos clients vers leurs objectifs.</p>
         </section>
         <section>
+            <h3>Communication et écoute active</h3>
             <img src="images/pic02.jpg" alt="" />
-            <div>
-                <h3>Communication et écoute active</h3>
-                <p>Maîtrisez les techniques de communication efficace et d'écoute active pour établir une relation de confiance avec vos clients.</p>
-            </div>
+            <p>Maîtrisez les techniques de communication efficace et d'écoute active pour établir une relation de confiance avec vos clients.</p>
         </section>
         <section>
+            <h3>Coaching professionnel</h3>
             <img src="images/pic03.jpg" alt="" />
-            <div>
-                <h3>Coaching professionnel</h3>
-                <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
-            </div>
+            <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
         </section>
     </div>
 
@@ -106,8 +105,13 @@
 <script>
     // Gestionnaire d'événements pour le clic sur le bouton "Inscription"
     document.getElementById('inscriptionBtn').addEventListener('click', function() {
-        // Afficher le formulaire Google lors du clic sur le bouton
-        document.getElementById('formContainer').classList.remove('hidden');
+        var formContainer = document.getElementById('formContainer');
+        // Afficher ou masquer le formulaire Google lors du clic sur le bouton
+        if (formContainer.classList.contains('hidden')) {
+            formContainer.classList.remove('hidden');
+        } else {
+            formContainer.classList.add('hidden');
+        }
     });
 </script>
 
