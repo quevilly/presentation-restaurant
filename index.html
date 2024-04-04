@@ -10,42 +10,63 @@
             background-color: #f0f0f0; /* Blanc gris professionnel */
             font-family: Arial, sans-serif;
             color: #333; /* Texte plus noir */
-            padding: 20px; /* Espacement du contenu */
         }
         h1, h2, h3 {
             font-weight: bold; /* Titres plus gras */
         }
         img {
+            display: block;
+            margin: 0 auto;
             max-width: 100%;
             height: auto;
         }
-        /* Conteneur pour la photo de profil */
-        #profileContainer {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        /* Photo de profil ronde */
-        #profilePicture {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%; /* Rendre la photo de profil ronde */
-            margin-right: 20px;
-        }
-        /* Nom et Prénom */
-        #name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-right: 20px;
-        }
-        /* Bouton "Voir" */
+        /* Bouton d'accès au profil */
         #profileButton {
-            background-color: transparent;
-            color: #000; /* Noir */
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #0077B5; /* Couleur LinkedIn */
+            color: #fff;
             border: none;
-            cursor: pointer;
+            border-radius: 5px;
             font-size: 16px;
-            text-decoration: underline; /* Souligner le texte */
+            cursor: pointer;
+        }
+        /* Profil - partie rétractable */
+        #profileDetails {
+            display: none;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+        }
+        /* Style pour les informations du profil */
+        #profileDetails h2,
+        #profileDetails h3,
+        #profileDetails p,
+        #profileDetails ul {
+            margin-bottom: 10px;
+        }
+        #profileDetails ul {
+            padding-left: 20px;
+        }
+        /* Styles pour le formulaire Google */
+        #formContainer {
+            margin: 0 auto;
+            text-align: center;
+        }
+        /* Ligne séparatrice */
+        .separator {
+            border-top: 1px solid #000;
+            margin: 20px auto;
+            width: 80%;
+        }
+        /* Titre "Me contacter" */
+        #contactTitle {
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -53,23 +74,15 @@
 
 <!-- Header -->
 <div id="header">
-    <!-- Conteneur pour la photo de profil, le nom et le bouton -->
-    <div id="profileContainer">
-        <!-- Photo de profil -->
-        <img id="profilePicture" src="images/improfil.png" alt="Photo de profil" />
-        <!-- Nom et Prénom -->
-        <div>
-            <div id="name">Christine Moulin</div>
-            <!-- Bouton "Voir" -->
-            <button id="profileButton">Voir</button>
-        </div>
-    </div>
+    <h1>Christine Moulin</h1>
     <p>Coach professionnelle proposant des formations pour son métier.</p>
 </div>
 
 <!-- Profil -->
 <section id="profil" class="container">
-    <div id="profileDetails" style="display: none;">
+    <img src="images/improfil.png" alt="Photo de profil" />
+    <button id="profileButton">Voir le Profil</button>
+    <div id="profileDetails">
         <h2>Master Executive Coach - Owner</h2>
         <h3>CHP&Co</h3>
         <p>sept. 2006 - aujourd’hui · 17 ans 8 mois</p>
@@ -90,7 +103,49 @@
 
 <!-- Main -->
 <div id="main">
-<!-- Le reste du code reste inchangé pour cette partie -->
+
+    <header class="container">
+        <h2>Formation pour devenir coach professionnel</h2>
+    </header>
+
+    <div class="container">
+        <section>
+            <h3>Les bases du coaching</h3>
+            <img src="images/pic01.jpg" alt="" />
+            <p>Apprenez les principes fondamentaux du coaching et développez vos compétences pour accompagner vos clients vers leurs objectifs.</p>
+        </section>
+        <section>
+            <h3>Communication et écoute active</h3>
+            <img src="images/pic02.jpg" alt="" />
+            <p>Maîtrisez les techniques de communication efficace et d'écoute active pour établir une relation de confiance avec vos clients.</p>
+        </section>
+        <section>
+            <h3>Coaching professionnel</h3>
+            <img src="images/pic03.jpg" alt="" />
+            <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
+        </section>
+    </div>
+
+    <!-- Insérer le formulaire Google ici -->
+    <div class="container hidden" id="formContainer">
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeFvZ3vf02pa1yZnSf8SAKpKVGqENt9-CyX5njFNLA0NvE-pQ/viewform?embedded=true" width="640" height="783" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
+    </div>
+
+    <!-- Ligne séparatrice -->
+    <div class="separator"></div>
+
+    <!-- Titre "Me contacter" -->
+    <h2 id="contactTitle">Me contacter</h2>
+
+    <footer class="container">
+        <ul class="icons">
+            <li><a href="https://www.linkedin.com/in/bruno-quevilly-a5009629a/" class="icon" target="_blank"><img src="images/linkedin_black_logo_icon_147114_xqqzet.png" alt="LinkedIn"></a></li>
+            <li><a href="https://www.facebook.com/groups/308498349963028/" class="icon" target="_blank"><img src="images/facebook-logo-black-2019_owjioq.png" alt="Facebook"></a></li>
+            <li><a href="mailto:bru.quevilly@gmail.com" class="icon"><img src="images/mail_ru_black_logo_icon_147112_mpsdro.png" alt="Email"></a></li>
+        </ul>
+    </footer>
+
+</div>
 
 <!-- Scripts -->
 <script src="assets/js/jquery.min.js"></script>
@@ -100,7 +155,7 @@
 <script src="assets/js/main.js"></script>
 
 <script>
-    // Gestionnaire d'événements pour le clic sur le bouton "Voir"
+    // Gestionnaire d'événements pour le clic sur le bouton "Voir le Profil"
     document.getElementById('profileButton').addEventListener('click', function() {
         var profileDetails = document.getElementById('profileDetails');
         // Afficher ou masquer les détails du profil lors du clic sur le bouton
