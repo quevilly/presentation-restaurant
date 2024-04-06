@@ -22,7 +22,8 @@
         }
         /* Bouton d'accès au profil */
         #profileButton {
-            display: none; /* Le bouton "Voir le Profil" est désormais masqué */
+            text-align: center;
+            margin-top: 20px; /* Déplacer et centrer le bouton "Voir" */
         }
         /* Profil - partie rétractable */
         #profileDetails {
@@ -37,8 +38,8 @@
         /* Styles pour le lien "Voir" */
         #profil a {
             color: grey;
-            text-align: center;
             display: block;
+            text-align: center;
             margin-top: 20px; /* Augmenter l'espace entre la photo et le lien */
         }
         /* Style pour le bouton "S'inscrire" */
@@ -64,31 +65,29 @@
 
 <!-- Profil -->
 <section id="profil" class="container" style="display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; align-items: center;">
-        <img src="images/improfil.png" alt="Photo de profil" style="border-radius: 50%; width: 100px; height: 100px; margin-right: 40px; margin-bottom: 10px;" />
-        <div>
-            <span style="font-weight: bold;">Christine Moulin</span>
-            <a href="#" style="color: grey; display: block; text-align: center;">Voir</a>
-        </div>
-    </div>
-    <div id="profileDetails" style="display: none; width: 100%;">
-        <h2>Master Executive Coach - Owner</h2>
-        <h3>CHP&Co</h3>
-        <p>sept. 2006 - aujourd’hui · 17 ans 8 mois</p>
-        <p>Coaching ~ Conseil ~ Co-Développement</p>
-        <ul>
-            <li>Coaching d'organisation (vision partagée et accompagnement des transformations)</li>
-            <li>Coaching de dirigeants et de leur comité de direction</li>
-            <li>Coaching de managers et de leurs équipes</li>
-            <li>Coaching vers la réussite au féminin</li>
-            <li>Coaching de jeunes vers la réussite de sa vie</li>
-            <li>Coaching vers la réussite de sa vie post carrière professionnelle</li>
-            <li>Superviseur en individuel et collectif</li>
-            <li>Formateur de Coachs</li>
-            <li>Art-Coaching</li>
-        </ul>
+    <img src="images/improfil.png" alt="Photo de profil" style="border-radius: 50%; width: 100px; height: 100px; margin-right: 20px; margin-bottom: 10px;" />
+    <div>
+        <span style="font-weight: bold; font-size: 18px; color: black;">Christine Moulin</span>
+        <a href="#" style="color: grey; display: block; text-align: center;">Voir</a>
     </div>
 </section>
+<div id="profileDetails" style="display: none; width: 100%;">
+    <h2>Master Executive Coach - Owner</h2>
+    <h3>CHP&Co</h3>
+    <p>sept. 2006 - aujourd’hui · 17 ans 8 mois</p>
+    <p>Coaching ~ Conseil ~ Co-Développement</p>
+    <ul>
+        <li>Coaching d'organisation (vision partagée et accompagnement des transformations)</li>
+        <li>Coaching de dirigeants et de leur comité de direction</li>
+        <li>Coaching de managers et de leurs équipes</li>
+        <li>Coaching vers la réussite au féminin</li>
+        <li>Coaching de jeunes vers la réussite de sa vie</li>
+        <li>Coaching vers la réussite de sa vie post carrière professionnelle</li>
+        <li>Superviseur en individuel et collectif</li>
+        <li>Formateur de Coachs</li>
+        <li>Art-Coaching</li>
+    </ul>
+</div>
 
 <!-- Main -->
 <div id="main">
@@ -173,3 +172,4 @@
 
 </body>
 </html>
+
