@@ -22,15 +22,7 @@
         }
         /* Bouton d'accès au profil */
         #profileButton {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            background-color: #0077B5; /* Couleur LinkedIn */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
+            display: none; /* Le bouton "Voir le Profil" est désormais masqué */
         }
         /* Profil - partie rétractable */
         #profileDetails {
@@ -80,24 +72,29 @@
 
 <!-- Profil -->
 <section id="profil" class="container">
-    <img src="images/improfil.png" alt="Photo de profil" />
-    <button id="profileButton">Voir le Profil</button>
-    <div id="profileDetails">
-        <h2>Master Executive Coach - Owner</h2>
-        <h3>CHP&Co</h3>
-        <p>sept. 2006 - aujourd’hui · 17 ans 8 mois</p>
-        <p>Coaching ~ Conseil ~ Co-Développement</p>
-        <ul>
-            <li>Coaching d'organisation (vision partagée et accompagnement des transformations)</li>
-            <li>Coaching de dirigeants et de leur comité de direction</li>
-            <li>Coaching de managers et de leurs équipes</li>
-            <li>Coaching vers la réussite au féminin</li>
-            <li>Coaching de jeunes vers la réussite de sa vie</li>
-            <li>Coaching vers la réussite de sa vie post carrière professionnelle</li>
-            <li>Superviseur en individuel et collectif</li>
-            <li>Formateur de Coachs</li>
-            <li>Art-Coaching</li>
-        </ul>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <img src="images/improfil.png" alt="Photo de profil" />
+            <span style="margin-left: 10px; font-weight: bold;">Christine Moulin</span>
+            <a href="#" style="margin-left: 5px; color: grey;">Voir</a>
+        </div>
+        <div id="profileDetails" style="display: none;">
+            <h2>Master Executive Coach - Owner</h2>
+            <h3>CHP&Co</h3>
+            <p>sept. 2006 - aujourd’hui · 17 ans 8 mois</p>
+            <p>Coaching ~ Conseil ~ Co-Développement</p>
+            <ul>
+                <li>Coaching d'organisation (vision partagée et accompagnement des transformations)</li>
+                <li>Coaching de dirigeants et de leur comité de direction</li>
+                <li>Coaching de managers et de leurs équipes</li>
+                <li>Coaching vers la réussite au féminin</li>
+                <li>Coaching de jeunes vers la réussite de sa vie</li>
+                <li>Coaching vers la réussite de sa vie post carrière professionnelle</li>
+                <li>Superviseur en individuel et collectif</li>
+                <li>Formateur de Coachs</li>
+                <li>Art-Coaching</li>
+            </ul>
+        </div>
     </div>
 </section>
 
@@ -155,10 +152,11 @@
 <script src="assets/js/main.js"></script>
 
 <script>
-    // Gestionnaire d'événements pour le clic sur le bouton "Voir le Profil"
-    document.getElementById('profileButton').addEventListener('click', function() {
+    // Gestionnaire d'événements pour le clic sur le lien "Voir"
+    document.querySelector('#profil a').addEventListener('click', function(event) {
+        event.preventDefault(); // Empêcher le comportement par défaut du lien
         var profileDetails = document.getElementById('profileDetails');
-        // Afficher ou masquer les détails du profil lors du clic sur le bouton
+        // Afficher ou masquer les détails du profil lors du clic sur le lien
         if (profileDetails.style.display === 'none') {
             profileDetails.style.display = 'block';
         } else {
@@ -169,3 +167,4 @@
 
 </body>
 </html>
+
