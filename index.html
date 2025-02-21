@@ -1,155 +1,141 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <title>Christine Moulin - Coach Professionnelle</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à Sous</title>
     <style>
         body {
-            background-color: #f0f0f0; /* Blanc gris professionnel */
             font-family: Arial, sans-serif;
-            color: #333; /* Texte plus noir */
+            text-align: center;
+            background-color: #f8f9fa;
         }
-        h1, h2, h3 {
-            font-weight: bold; /* Titres plus gras */
+        .container {
+            margin-top: 50px;
         }
-        img {
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-            height: auto;
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 20px;
         }
-        /* Profil - partie rétractable */
-        #profileDetails {
-            display: none;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 80%;
-            margin: 10px auto; /* Centrer l'onglet déroulant */
+        .reel {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            margin: 0 10px;
+            background-color: white;
+            border: 2px solid #000;
+            display: inline-block;
+            font-weight: bold;
+            text-align: center;
+            transition: transform 1s ease-in-out;
         }
-        /* Style pour le bouton "S'inscrire" */
-        #inscriptionButton {
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+        .btn {
             padding: 10px 20px;
-            font-size: 16px;
-            margin: 20px auto;
-            display: block;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            margin-top: 10px;
         }
-        /* Formulaire Google (initialisé comme masqué) */
-        #formContainer {
-            display: none;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 80%;
-            margin: 10px auto; /* Centrer l'onglet déroulant */
+        .btn:disabled {
+            background-color: gray;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-size: 1rem;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-
-<!-- Header -->
-<div id="header">
-    <h1>Christine Moulin</h1>
-    <p>Coach professionnelle proposant des formations pour son métier.</p>
-</div>
-
-<!-- Profil -->
-<section id="profil" class="container" style="display: flex; align-items: center; margin-right: auto;">
-    <img src="images/improfil.png" alt="Photo de profil" style="border-radius: 50%; width: 100px; height: 100px; margin-right: 20px; margin-bottom: 10px; margin-left: 0;" />
-    <div>
-        <span style="font-weight: bold; font-size: 18px; color: black;">Christine Moulin</span>
-        <a href="#" style="color: grey; display: block; margin-top: 5px;">Voir</a>
-    </div>
-</section>
-
-<!-- Bouton pour s'inscrire -->
-<button id="inscriptionButton">S'inscrire</button>
-
-<!-- Formulaire Google (initialisé comme masqué) -->
-<div class="container" id="formContainer">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeFvZ3vf02pa1yZnSf8SAKpKVGqENt9-CyX5njFNLA0NvE-pQ/viewform?embedded=true" width="100%" height="783" frameborder="0" marginheight="0" marginwidth="0">Chargement en cours...</iframe>
-</div>
-
-<!-- Main -->
-<div id="main">
-
-    <header class="container">
-        <h2>Formation pour devenir coach professionnel</h2>
-    </header>
-
     <div class="container">
-        <section>
-            <h3>Les bases du coaching</h3>
-            <img src="images/pic01.jpg" alt="" />
-            <p>Apprenez les principes fondamentaux du coaching et développez vos compétences pour accompagner vos clients vers leurs objectifs.</p>
-        </section>
-        <section>
-            <h3>Communication et écoute active</h3>
-            <img src="images/pic02.jpg" alt="" />
-            <p>Maîtrisez les techniques de communication efficace et d'écoute active pour établir une relation de confiance avec vos clients.</p>
-        </section>
-        <section>
-            <h3>Coaching professionnel</h3>
-            <img src="images/pic03.jpg" alt="" />
-            <p>Découvrez les aspects spécifiques du coaching dans le contexte professionnel et comment aider vos clients à exceller dans leur carrière.</p>
-        </section>
+        <h1>Jouez et gagnez !</h1>
+        <p><a id="map-link" href="https://www.google.com/maps/place/Alcazar+de+Paris/reviews" target="_blank">Cliquez ici pour voir les commentaires et laisser une note</a></p>
+        <div class="slot-machine">
+            <div class="reel" id="reel1">❔</div>
+            <div class="reel" id="reel2">❔</div>
+            <div class="reel" id="reel3">❔</div>
+        </div>
+        <button id="play-btn" class="btn" disabled>Jouer</button>
+        <p class="message" id="message"></p>
+        <p class="error" id="error-message"></p>
     </div>
+    <script>
+        let playOnce = false;
+        let linkClicked = false;
 
-    <!-- Ligne séparatrice -->
-    <div class="separator"></div>
-
-    <!-- Titre "Me contacter" -->
-    <h2 id="contactTitle">Me contacter</h2>
-
-    <footer class="container">
-        <ul class="icons">
-            <li><a href="https://www.linkedin.com/in/bruno-quevilly-a5009629a/" class="icon" target="_blank"><img src="images/linkedin_black_logo_icon_147114_xqqzet.png" alt="LinkedIn"></a></li>
-            <li><a href="https://www.facebook.com/groups/308498349963028/" class="icon" target="_blank"><img src="images/facebook-logo-black-2019_owjioq.png" alt="Facebook"></a></li>
-            <li><a href="mailto:bru.quevilly@gmail.com" class="icon"><img src="images/mail_ru_black_logo_icon_147112_mpsdro.png" alt="Email"></a></li>
-        </ul>
-    </footer>
-
-</div>
-
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-
-<script>
-    // Gestionnaire d'événements pour le clic sur le bouton "Voir"
-    document.querySelector('#profil a').addEventListener('click', function(event) {
-        event.preventDefault(); // Empêcher le comportement par défaut du lien
-        var profileDetails = document.getElementById('profileDetails');
-        // Afficher ou masquer les détails du profil lors du clic sur le lien
-        if (profileDetails.style.display === 'none') {
-            profileDetails.style.display = 'block';
-        } else {
-            profileDetails.style.display = 'none';
+        function checkIfLinkClicked() {
+            linkClicked = true;
+            setTimeout(() => {
+                document.getElementById("play-btn").disabled = false;
+            }, 3000);
         }
-    });
 
-    // Gestionnaire d'événements pour le clic sur le bouton "S'inscrire"
-    document.getElementById('inscriptionButton').addEventListener('click', function() {
-        var formContainer = document.getElementById('formContainer');
-        // Afficher ou masquer le formulaire lors du clic sur le bouton "S'inscrire"
-        if (formContainer.style.display === 'none') {
-            formContainer.style.display = 'block';
-        } else {
-            formContainer.style.display = 'none';
-        }
-    });
-</script>
+        document.getElementById("map-link").addEventListener("click", checkIfLinkClicked);
 
+        document.getElementById("play-btn").addEventListener("click", function() {
+            let errorMessage = document.getElementById("error-message");
+            if (!linkClicked) {
+                errorMessage.textContent = "Erreur : Vous devez d'abord laisser une note avant de jouer !";
+                return;
+            }
+            if (playOnce) {
+                errorMessage.textContent = "Erreur : Vous avez déjà joué, vous ne pouvez pas rejouer !";
+                return;
+            }
+            errorMessage.textContent = "";
+            playOnce = true;
+            document.getElementById("play-btn").disabled = true;
+
+            let symbols = ["🍰", "🥤", "❌"];
+            
+            function getRandomSymbol() {
+                let rand = Math.random() * 100;
+                if (rand < 10) return symbols[0]; // 10% pour le dessert
+                if (rand < 30) return symbols[1]; // 20% pour la boisson
+                return symbols[2]; // 70% pour rien
+            }
+            
+            function getWeightedResult() {
+                let chance = Math.random();
+                if (chance < 0.2) { // 20% de chances d'obtenir un gain
+                    return ["🥤", "🥤", "🥤"]; // Majorité de boissons
+                }
+                return [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
+            }
+
+            let reel1 = document.getElementById("reel1");
+            let reel2 = document.getElementById("reel2");
+            let reel3 = document.getElementById("reel3");
+
+            reel1.style.transform = "rotateX(360deg)";
+            reel2.style.transform = "rotateX(360deg)";
+            reel3.style.transform = "rotateX(360deg)";
+
+            setTimeout(() => {
+                let results = getWeightedResult();
+                reel1.textContent = results[0];
+                reel2.textContent = results[1];
+                reel3.textContent = results[2];
+                
+                let message = "Vous n'avez rien gagné !";
+                if (results[0] === "🍰" && results[1] === "🍰" && results[2] === "🍰") {
+                    message = "Félicitations ! Vous avez gagné un dessert !";
+                } else if (results[0] === "🥤" && results[1] === "🥤" && results[2] === "🥤") {
+                    message = "Félicitations ! Vous avez gagné une boisson !";
+                }
+                
+                document.getElementById("message").textContent = message;
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
