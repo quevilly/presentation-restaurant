@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant - Machine à Sous</title>
+    <title>Le Gourmet - Machine à Sous</title>
     <style>
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Georgia', serif;
             background-color: #f8f9fa; 
             margin: 0; 
             padding: 0; 
@@ -14,6 +14,17 @@
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
+            flex-direction: column;
+        }
+        .header {
+            width: 100%;
+            background: #8B0000;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .container {
             width: 90%;
@@ -23,8 +34,9 @@
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin-top: 20px;
         }
-        h1 { color: #d35400; font-size: 22px; }
+        h1 { color: #8B0000; font-size: 22px; }
         p { font-size: 16px; color: #333; }
         button {
             width: 100%;
@@ -78,9 +90,10 @@
     </style>
 </head>
 <body>
+    <div class="header">Le Gourmet - Restaurant Gastronomique</div>
     <div class="container">
-        <h1>Gagnez une Boisson ou un Dessert !</h1>
-        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous !</p>
+        <h1>Gagnez une Expérience Gourmande !</h1>
+        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous pour remporter un dessert ou une boisson d'exception !</p>
         <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
         <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
         
