@@ -3,140 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine à Sous</title>
+    <title>Restaurant - Machine à Sous</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .slot-machine {
-            display: flex;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 20px;
-        }
-        .reel {
-            width: 60px;
-            height: 60px;
-            line-height: 60px;
-            margin: 0 10px;
-            background-color: white;
-            border: 2px solid #000;
-            display: inline-block;
-            font-weight: bold;
-            text-align: center;
-            transition: transform 1s ease-in-out;
-        }
-        .btn {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            margin-top: 10px;
-        }
-        .btn:disabled {
-            background-color: gray;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .error {
-            color: red;
-            font-size: 1rem;
-            margin-top: 10px;
-        }
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        h1 { color: #d35400; }
+        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
+        #googleBtn, #playBtn { padding: 12px 24px; font-size: 18px; cursor: pointer; margin: 20px; border: none; border-radius: 8px; }
+        #playBtn { background: gray; cursor: not-allowed; color: white; }
+        #googleBtn { background: #007bff; color: white; }
+        .slot-machine { display: flex; justify-content: center; align-items: center; margin: 20px auto; padding: 20px; background: #222; border-radius: 12px; box-shadow: inset 0px 4px 10px rgba(255, 255, 255, 0.2); width: 320px; }
+        .slot { width: 80px; height: 80px; font-size: 40px; text-align: center; line-height: 80px; background: #fff; border-radius: 10px; border: 4px solid #333; margin: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); }
+        .result { font-size: 24px; font-weight: bold; display: none; margin-top: 20px; padding: 10px; background: #28a745; color: white; border-radius: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Jouez et gagnez !</h1>
-        <p><a id="map-link" href="https://www.google.com/maps/place/Alcazar+de+Paris/reviews" target="_blank">Cliquez ici pour voir les commentaires et laisser une note</a></p>
+        <h1>Bienvenue dans notre restaurant !</h1>
+        <p>Nous vous proposons une expérience unique : laissez un avis sur Google et tentez votre chance à notre machine à sous pour gagner une boisson ou un dessert offert !</p>
+        <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
+        <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
+        
         <div class="slot-machine">
-            <div class="reel" id="reel1">❔</div>
-            <div class="reel" id="reel2">❔</div>
-            <div class="reel" id="reel3">❔</div>
+            <div class="slot" id="slot1">❓</div>
+            <div class="slot" id="slot2">❓</div>
+            <div class="slot" id="slot3">❓</div>
         </div>
-        <button id="play-btn" class="btn" disabled>Jouer</button>
-        <p class="message" id="message"></p>
-        <p class="error" id="error-message"></p>
+        <div class="result" id="result"></div>
     </div>
+    
     <script>
-        let playOnce = false;
-        let linkClicked = false;
+        let canPlay = false;
+        let hasPlayed = false;
 
-        function checkIfLinkClicked() {
-            linkClicked = true;
-            setTimeout(() => {
-                document.getElementById("play-btn").disabled = false;
-            }, 3000);
+        function visitGoogle() {
+            window.open('https://www.google.com/maps/place/YourBusiness', '_blank');
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('playBtn').style.background = 'green';
+            document.getElementById('playBtn').style.cursor = 'pointer';
+            canPlay = true;
         }
 
-        document.getElementById("map-link").addEventListener("click", checkIfLinkClicked);
-
-        document.getElementById("play-btn").addEventListener("click", function() {
-            let errorMessage = document.getElementById("error-message");
-            if (!linkClicked) {
-                errorMessage.textContent = "Erreur : Vous devez d'abord laisser une note avant de jouer !";
-                return;
-            }
-            if (playOnce) {
-                errorMessage.textContent = "Erreur : Vous avez déjà joué, vous ne pouvez pas rejouer !";
-                return;
-            }
-            errorMessage.textContent = "";
-            playOnce = true;
-            document.getElementById("play-btn").disabled = true;
-
-            let symbols = ["🍰", "🥤", "❌"];
+        function playSlot() {
+            if (!canPlay || hasPlayed) return;
+            hasPlayed = true;
+            document.getElementById('playBtn').disabled = true;
+            document.getElementById('playBtn').style.background = 'gray';
+            document.getElementById('playBtn').style.cursor = 'not-allowed';
             
-            function getRandomSymbol() {
-                let rand = Math.random() * 100;
-                if (rand < 10) return symbols[0]; // 10% pour le dessert
-                if (rand < 30) return symbols[1]; // 20% pour la boisson
-                return symbols[2]; // 70% pour rien
-            }
+            let items = ['☕', '🥤', '🍰'];
+            let slot1 = document.getElementById('slot1');
+            let slot2 = document.getElementById('slot2');
+            let slot3 = document.getElementById('slot3');
             
-            function getWeightedResult() {
-                let chance = Math.random();
-                if (chance < 0.2) { // 20% de chances d'obtenir un gain
-                    return ["🥤", "🥤", "🥤"]; // Majorité de boissons
+            let resultText = document.getElementById('result');
+            resultText.style.display = 'none';
+            
+            let spins = 30;
+            let speed = 100;
+            let interval = setInterval(() => {
+                slot1.innerText = items[Math.floor(Math.random() * items.length)];
+                slot2.innerText = items[Math.floor(Math.random() * items.length)];
+                slot3.innerText = items[Math.floor(Math.random() * items.length)];
+                spins--;
+                if (spins <= 10) speed += 20;
+                if (spins === 0) {
+                    clearInterval(interval);
+                    let finalItem = slot1.innerText;
+                    if (slot1.innerText === slot2.innerText && slot2.innerText === slot3.innerText) {
+                        resultText.innerText = `Félicitations ! Vous avez gagné un ${finalItem}`;
+                    } else {
+                        resultText.innerText = "Dommage, essayez une autre fois !";
+                    }
+                    resultText.style.display = 'block';
                 }
-                return [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
-            }
-
-            let reel1 = document.getElementById("reel1");
-            let reel2 = document.getElementById("reel2");
-            let reel3 = document.getElementById("reel3");
-
-            reel1.style.transform = "rotateX(360deg)";
-            reel2.style.transform = "rotateX(360deg)";
-            reel3.style.transform = "rotateX(360deg)";
-
-            setTimeout(() => {
-                let results = getWeightedResult();
-                reel1.textContent = results[0];
-                reel2.textContent = results[1];
-                reel3.textContent = results[2];
-                
-                let message = "Vous n'avez rien gagné !";
-                if (results[0] === "🍰" && results[1] === "🍰" && results[2] === "🍰") {
-                    message = "Félicitations ! Vous avez gagné un dessert !";
-                } else if (results[0] === "🥤" && results[1] === "🥤" && results[2] === "🥤") {
-                    message = "Félicitations ! Vous avez gagné une boisson !";
-                }
-                
-                document.getElementById("message").textContent = message;
-            }, 1000);
-        });
+            }, speed);
+        }
     </script>
 </body>
 </html>
-
