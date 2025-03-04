@@ -5,21 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant - Machine à Sous</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        h1 { color: #d35400; }
-        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
-        #googleBtn, #playBtn { padding: 12px 24px; font-size: 18px; cursor: pointer; margin: 20px; border: none; border-radius: 8px; }
-        #playBtn { background: gray; cursor: not-allowed; color: white; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f8f9fa; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 { color: #d35400; font-size: 22px; }
+        p { font-size: 16px; color: #333; }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
         #googleBtn { background: #007bff; color: white; }
-        .slot-machine { display: flex; justify-content: center; align-items: center; margin: 20px auto; padding: 20px; background: #222; border-radius: 12px; box-shadow: inset 0px 4px 10px rgba(255, 255, 255, 0.2); width: 320px; }
-        .slot { width: 80px; height: 80px; font-size: 40px; text-align: center; line-height: 80px; background: #fff; border-radius: 10px; border: 4px solid #333; margin: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); }
-        .result { font-size: 24px; font-weight: bold; display: none; margin-top: 20px; padding: 10px; background: #28a745; color: white; border-radius: 8px; }
+        #playBtn {
+            background: gray;
+            color: white;
+            cursor: not-allowed;
+        }
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #222;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .slot {
+            width: 70px;
+            height: 70px;
+            font-size: 36px;
+            text-align: center;
+            line-height: 70px;
+            background: #fff;
+            border-radius: 10px;
+            border: 4px solid #333;
+            margin: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .success { background: #28a745; color: white; }
+        .fail { background: #dc3545; color: white; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenue dans notre restaurant !</h1>
-        <p>Nous vous proposons une expérience unique : laissez un avis sur Google et tentez votre chance à notre machine à sous pour gagner une boisson ou un dessert offert !</p>
+        <h1>Gagnez une Boisson ou un Dessert !</h1>
+        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous !</p>
         <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
         <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
         
@@ -38,7 +99,7 @@
         function visitGoogle() {
             window.open('https://www.google.com/maps/place/YourBusiness', '_blank');
             document.getElementById('playBtn').disabled = false;
-            document.getElementById('playBtn').style.background = 'green';
+            document.getElementById('playBtn').style.background = '#28a745';
             document.getElementById('playBtn').style.cursor = 'pointer';
             canPlay = true;
         }
@@ -57,6 +118,7 @@
             
             let resultText = document.getElementById('result');
             resultText.style.display = 'none';
+            resultText.className = 'result';
             
             let spins = 30;
             let speed = 100;
@@ -71,8 +133,10 @@
                     let finalItem = slot1.innerText;
                     if (slot1.innerText === slot2.innerText && slot2.innerText === slot3.innerText) {
                         resultText.innerText = `Félicitations ! Vous avez gagné un ${finalItem}`;
+                        resultText.classList.add('success');
                     } else {
                         resultText.innerText = "Dommage, essayez une autre fois !";
+                        resultText.classList.add('fail');
                     }
                     resultText.style.display = 'block';
                 }
