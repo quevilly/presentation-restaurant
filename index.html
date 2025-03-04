@@ -13,7 +13,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            overflow: hidden;
         }
         .header {
             width: 100%;
@@ -37,7 +39,7 @@
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-top: 80px;
+            margin-top: 100px;
         }
         h1 { color: #000; font-size: 22px; }
         p { font-size: 16px; color: #333; }
@@ -56,11 +58,17 @@
             color: white;
             cursor: not-allowed;
         }
+        .slot-machine-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
         .slot-machine {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px auto;
             padding: 15px;
             background: #111;
             border-radius: 12px;
@@ -99,6 +107,30 @@
             color: #007bff;
             text-decoration: none;
         }
+        /* Style du certificat */
+        #certificate {
+            display: none;
+            background: white;
+            border: 2px solid #28a745;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            color: #000;
+        }
+        /* Animation emoji */
+        .emoji {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            font-size: 40px;
+            animation: fallAnimation 3s linear forwards;
+        }
+        @keyframes fallAnimation {
+            from { top: -50px; opacity: 1; }
+            to { top: 100vh; opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -109,17 +141,20 @@
         <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
         <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
         
-        <div class="slot-machine">
-            <div class="slot" id="slot1">❓</div>
-            <div class="slot" id="slot2">❓</div>
-            <div class="slot" id="slot3">❓</div>
+        <div class="slot-machine-container">
+            <div class="slot-machine">
+                <div class="slot" id="slot1">❓</div>
+                <div class="slot" id="slot2">❓</div>
+                <div class="slot" id="slot3">❓</div>
+            </div>
         </div>
         <div class="result" id="result"></div>
+        <div id="certificate"></div>
     </div>
     <div class="footer">
         <a href="https://www.votresite.com">Visitez notre site officiel</a>
     </div>
-    
+
     <script>
         let canPlay = false;
         let hasPlayed = false;
@@ -139,30 +174,47 @@
             document.getElementById('playBtn').style.background = 'gray';
             document.getElementById('playBtn').style.cursor = 'not-allowed';
             
-            let items = ['🍺', '🍷', '🍰'];
+            let items = ['🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍷', '🍰'];
             let slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-            let resultText = document.getElementById('result');
-            resultText.style.display = 'none';
-            resultText.className = 'result';
-            
-            function spin(slot, spins) {
+            let certificate = document.getElementById('certificate');
+
+            function spin(slot, spins, callback) {
                 let count = 0;
                 let interval = setInterval(() => {
                     slot.innerText = items[Math.floor(Math.random() * items.length)];
                     count++;
-                    if (count >= spins) clearInterval(interval);
+                    if (count >= spins) {
+                        clearInterval(interval);
+                        if (callback) callback();
+                    }
                 }, 100);
             }
-            
-            spin(slots[0], 30);
-            spin(slots[1], 35);
-            spin(slots[2], 40);
-            
-            setTimeout(() => {
-                resultText.innerText = "Dommage, essayez une autre fois !";
-                resultText.classList.add('fail');
-                resultText.style.display = 'block';
-            }, 4000);
+
+            spin(slots[0], 30, () => {
+                spin(slots[1], 35, () => {
+                    spin(slots[2], 40, () => {
+                        if (slots[0].innerText === slots[1].innerText && slots[1].innerText === slots[2].innerText) {
+                            certificate.innerHTML = `<strong>Certificat de Gain</strong><br>${new Date().toLocaleString()}<br>Montrez ceci au serveur.`;
+                            certificate.style.display = 'block';
+                            confettiEffect();
+                        }
+                    });
+                });
+            });
+        }
+
+        function dropEmoji() {
+            let emoji = document.createElement('div');
+            emoji.classList.add('emoji');
+            emoji.innerText = '🎉';
+            document.body.appendChild(emoji);
+            setTimeout(() => emoji.remove(), 3000);
+        }
+
+        function confettiEffect() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(dropEmoji, i * 500);
+            }
         }
     </script>
 </body>
