@@ -32,6 +32,8 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         }
         .container {
+            position: relative; /* Ajouté pour le positionnement relatif des emojis */
+            overflow: hidden;   /* Pour masquer les emojis en dehors de la case */
             width: 90%;
             max-width: 500px;
             background: white;
@@ -119,17 +121,18 @@
             font-size: 16px;
             color: #000;
         }
-        /* Animation emoji */
+        /* Animation emoji : apparition du haut de la case et disparition sous le bas */
         .emoji {
             position: absolute;
-            top: -50px;
+            top: 0; /* Apparait depuis le haut de la case */
             left: 50%;
+            transform: translateX(-50%);
             font-size: 40px;
             animation: fallAnimation 3s linear forwards;
         }
         @keyframes fallAnimation {
-            from { top: -50px; opacity: 1; }
-            to { top: 100vh; opacity: 0; }
+            from { top: 0; opacity: 1; }
+            to { top: 100%; opacity: 0; } /* Disparaît sous le bas de la case */
         }
     </style>
 </head>
@@ -174,7 +177,7 @@
             document.getElementById('playBtn').style.background = 'gray';
             document.getElementById('playBtn').style.cursor = 'not-allowed';
             
-            let items = ['🍺','🍺','🍺','🍺','🍺','🍺','🍺','🍺', '🍷', '🍰'];
+            let items = ['🍺', '🍷', '🍰'];
             let slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
             let certificate = document.getElementById('certificate');
 
@@ -214,7 +217,8 @@
             let emoji = document.createElement('div');
             emoji.classList.add('emoji');
             emoji.innerText = '🎉    🎉    🎉   🎉';
-            document.body.appendChild(emoji);
+            // Ajout de l'emoji dans le container pour que l'animation soit relative à celui-ci
+            document.querySelector('.container').appendChild(emoji);
             setTimeout(() => emoji.remove(), 3000);
         }
 
@@ -233,7 +237,7 @@
         let diff = now - parseInt(lastVisit);
 
         // 24 heures en millisecondes (60 * 1000)
-        if (diff < 20000) {
+        if (diff < 86400000) {
             document.body.innerHTML = "<h1>Vous avez déjà joué venez retenter votre chance demain!</h1>";
         }
     } else {
