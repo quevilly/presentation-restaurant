@@ -6,8 +6,8 @@
     <title>Le Gourmet - Machine à Sous</title>
     <style>
         body {
-            font-family: 'Georgia', serif;
-            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f7e8d9 0%, #e8d5b9 100%);
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,117 +19,170 @@
         }
         .header {
             width: 100%;
-            background: #000;
-            color: white;
+            background: #2d1b0e;
+            color: #fff;
             text-align: center;
-            padding: 15px 0;
-            font-size: 24px;
+            padding: 20px 0;
+            font-size: 28px;
             font-weight: bold;
             position: fixed;
             top: 0;
             left: 0;
             z-index: 1000;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         .container {
             width: 90%;
-            max-width: 500px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             text-align: center;
-            margin-top: 100px;
+            margin-top: 120px;
+            border: 1px solid #e0d4b5;
         }
-        h1 { color: #000; font-size: 22px; }
-        p { font-size: 16px; color: #333; }
+        h1 {
+            color: #2d1b0e;
+            font-size: 26px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        p {
+            font-size: 16px;
+            color: #5a3e2b;
+            line-height: 1.5;
+        }
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             border: none;
-            border-radius: 8px;
-            margin-top: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+            transition: transform 0.2s, background 0.3s;
         }
-        #googleBtn { background: #007bff; color: white; }
+        button:hover:not(:disabled) {
+            transform: scale(1.03);
+        }
+        #googleBtn {
+            background: #d4a373;
+            color: #fff;
+        }
         #playBtn {
-            background: gray;
-            color: white;
+            background: #ccc;
+            color: #fff;
             cursor: not-allowed;
+        }
+        #playBtn:not(:disabled) {
+            background: #28a745;
+            cursor: pointer;
         }
         .slot-machine-container {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         .slot-machine {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
-            background: #111;
-            border-radius: 12px;
+            padding: 20px;
+            background: #2d1b0e;
+            border-radius: 15px;
             width: 100%;
-            max-width: 350px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         .slot {
-            width: 80px;
-            height: 80px;
-            font-size: 40px;
+            width: 90px;
+            height: 90px;
+            font-size: 50px;
             text-align: center;
-            line-height: 80px;
+            line-height: 90px;
             background: #fff;
-            border-radius: 10px;
-            border: 4px solid #444;
-            margin: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 5px solid #d4a373;
+            margin: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+        .slot.active {
+            transform: scale(1.05);
         }
         .result {
             font-size: 18px;
             font-weight: bold;
-            display: none;
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .success { background: #28a745; color: white; }
-        .fail { background: #dc3545; color: white; }
-        .footer {
             margin-top: 20px;
-            font-size: 14px;
-            color: #555;
+            padding: 12px;
+            border-radius: 10px;
+            display: none;
+            transition: opacity 0.3s;
         }
-        .footer a {
-            color: #007bff;
-            text-decoration: none;
+        .success {
+            background: #28a745;
+            color: #fff;
+            display: block;
         }
-        /* Style du certificat */
+        .fail {
+            background: #dc3545;
+            color: #fff;
+            display: block;
+        }
         #certificate {
             display: none;
-            background: white;
-            border: 2px solid #28a745;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            border: 3px dashed #d4a373;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             font-size: 16px;
-            color: #000;
+            color: #5a3e2b;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.5s ease-in;
         }
-        /* Animation emoji */
-        .emoji {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #certificate h2 {
+            color: #2d1b0e;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #certificate p {
+            margin: 12px 0;
+            font-size: 16px;
+            color: #5a3e2b;
+        }
+        #certificate .reward {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4a373;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        #certificate .stamp {
             position: absolute;
-            top: -50px;
-            left: 50%;
-            font-size: 40px;
-            animation: fallAnimation 3s linear forwards;
-        }
-        @keyframes fallAnimation {
-            from { top: -50px; opacity: 1; }
-            to { top: 100vh; opacity: 0; }
+            top: 15px;
+            right: 15px;
+            font-size: 16px;
+            color: #28a745;
+            transform: rotate(-15deg);
+            opacity: 0.7;
+            font-weight: bold;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -137,7 +190,7 @@
     <div class="header">Le Gourmet</div>
     <div class="container">
         <h1>Gagnez une Expérience Gourmande !</h1>
-        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous pour remporter un dessert ou une bière artisanale !</p>
+        <p>Déposez un avis sur Google et jouez à notre machine à sous pour tenter de remporter une bière artisanale, un verre de vin ou un dessert gourmet !</p>
         <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
         <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
         
@@ -151,40 +204,31 @@
         <div class="result" id="result"></div>
         <div id="certificate"></div>
     </div>
-    <div class="footer">
-        <a href="https://www.votresite.com">Visitez notre site officiel</a>
-    </div>
-
     <script>
-        let canPlay = false;
-        let hasPlayed = false;
-
         function visitGoogle() {
-            window.open('https://www.google.com/maps/place/YourBusiness', '_blank');
-            document.getElementById('playBtn').disabled = false;
             document.getElementById('playBtn').style.background = '#28a745';
             document.getElementById('playBtn').style.cursor = 'pointer';
-            canPlay = true;
+            document.getElementById('playBtn').disabled = false;
         }
 
         function playSlot() {
-            if (!canPlay || hasPlayed) return;
-            hasPlayed = true;
-            document.getElementById('playBtn').disabled = true;
-            document.getElementById('playBtn').style.background = 'gray';
-            document.getElementById('playBtn').style.cursor = 'not-allowed';
-            
-            let items = ['🍺', '🍷', '🍰'];
             let slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
+            let items = ['🍺', '🍷', '🍰'];
+            let resultDiv = document.getElementById('result');
             let certificate = document.getElementById('certificate');
+            resultDiv.style.display = 'none';
+            resultDiv.classList.remove('fail', 'success');
+            certificate.style.display = 'none';
 
             function spin(slot, spins, callback) {
                 let count = 0;
+                slot.classList.add('active');
                 let interval = setInterval(() => {
                     slot.innerText = items[Math.floor(Math.random() * items.length)];
                     count++;
                     if (count >= spins) {
                         clearInterval(interval);
+                        slot.classList.remove('active');
                         if (callback) callback();
                     }
                 }, 100);
@@ -193,31 +237,35 @@
             spin(slots[0], 30, () => {
                 spin(slots[1], 35, () => {
                     spin(slots[2], 40, () => {
+                        let rewardText = {
+                            '🍺': 'Bière Artisanale',
+                            '🍷': 'Verre de Vin',
+                            '🍰': 'Dessert Gourmet'
+                        };
+
                         if (slots[0].innerText === slots[1].innerText && slots[1].innerText === slots[2].innerText) {
-                            certificate.innerHTML = `<strong>Certificat de Gain</strong><br>${new Date().toLocaleString()}<br>Montrez ceci au serveur.`;
+                            certificate.innerHTML = `
+                                <h2>Certificat de Gain</h2>
+                                <p>Félicitations ! Vous avez gagné :</p>
+                                <p class="reward">${rewardText[slots[0].innerText]}</p>
+                                <p>Date : ${new Date().toLocaleString()}</p>
+                                <p>Présentez ce certificat à notre personnel pour récupérer votre récompense.</p>
+                                <p>Code unique : ${Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                                <div class="stamp">Validé</div>
+                            `;
                             certificate.style.display = 'block';
-                            confettiEffect();
+                            resultDiv.style.display = 'none';
+                        } else {
+                            resultDiv.innerText = 'Pas de chance aujourd’hui ! Revenez demain pour retenter votre chance.';
+                            resultDiv.classList.add('fail');
+                            resultDiv.style.display = 'block';
+                            certificate.style.display = 'none';
                         }
                     });
                 });
             });
         }
-
-        function dropEmoji() {
-            let emoji = document.createElement('div');
-            emoji.classList.add('emoji');
-            emoji.innerText = '🎉    🎉    🎉   🎉';
-            document.body.appendChild(emoji);
-            setTimeout(() => emoji.remove(), 3000);
-        }
-
-        function confettiEffect() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(dropEmoji, i * 500);
-            }
-        }
     </script>
-<script>
     // Vérifie si l'utilisateur a déjà visité la page
     let lastVisit = localStorage.getItem("lastVisit");
 
