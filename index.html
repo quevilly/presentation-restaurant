@@ -233,7 +233,7 @@
         let diff = now - parseInt(lastVisit);
 
         // 24 heures en millisecondes (60 * 1000)
-        if (diff < 86400000) {
+        if (diff < 20000) {
             document.body.innerHTML = "<h1>Vous avez déjà joué venez retenter votre chance demain!</h1>";
         }
     } else {
