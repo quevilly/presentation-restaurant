@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Gourmet - Machine à Sous</title>
+    <title>Le Gourmet</title>
     <style>
         body {
             font-family: 'Georgia', serif;
@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow: auto;
         }
         .header {
             width: 100%;
@@ -139,10 +139,10 @@
 <body>
     <div class="header">Le Gourmet</div>
     <div class="container">
-        <h1>Gagnez une Expérience Gourmande !</h1>
-        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous pour remporter un dessert ou une bière artisanale !</p>
+        <h1>Gagnez une boisson ou un dessert !</h1>
+        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous pour remporter un dessert ou une bière !</p>
         <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
-        <button id="playBtn" onclick="playSlot()" disabled>Jouer à la machine à sous</button>
+        <button id="playBtn" onclick="playSlot()" disabled>Jouer</button>
         
         <div class="slot-machine-container">
             <div class="slot-machine">
@@ -155,7 +155,7 @@
         <div id="certificate"></div>
     </div>
     <div class="footer">
-        <a href="https://www.votresite.com">Visitez notre site officiel</a>
+        <a href="https://www.votresite.com">Visitez notre site</a>
     </div>
 
     <script>
@@ -216,7 +216,7 @@
         function dropEmoji() {
             let emoji = document.createElement('div');
             emoji.classList.add('emoji');
-            emoji.innerText = '🎉    🎉    🎉   🎉';
+            emoji.innerText = '🎉';
             // Ajout de l'emoji dans le container pour que l'animation soit relative à celui-ci
             document.querySelector('.container').appendChild(emoji);
             setTimeout(() => emoji.remove(), 3000);
