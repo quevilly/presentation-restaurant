@@ -225,9 +225,9 @@
         let now = new Date().getTime();
         let diff = now - parseInt(lastVisit);
 
-        // 24 heures en millisecondes (24 * 60 * 60 * 1000)
+        // 24 heures en millisecondes (60 * 1000)
         if (diff < 86400000) {
-            document.body.innerHTML = "<h1>Accès interdit pendant 24h</h1>";
+            document.body.innerHTML = "<h1>Vous avez déjà joué venez retenter votre chance demain!</h1>";
         }
     } else {
         // Enregistre la visite
