@@ -194,9 +194,16 @@
                 spin(slots[1], 35, () => {
                     spin(slots[2], 40, () => {
                         if (slots[0].innerText === slots[1].innerText && slots[1].innerText === slots[2].innerText) {
-                            certificate.innerHTML = `<strong>Certificat de Gain</strong><br>${new Date().toLocaleString()}<br>Montrez ceci au serveur.`;
+                            certificate.innerHTML = `<strong>Félicitations ! Vous avez remporté une expérience gourmande !</strong><br>
+                            Date : ${new Date().toLocaleString()}<br>
+                            Présentez ce certificat au serveur pour réclamer votre prix.`;
                             certificate.style.display = 'block';
                             confettiEffect();
+                        } else {
+                            let resultElem = document.getElementById('result');
+                            resultElem.innerHTML = "Dommage, vous n'avez pas gagné cette fois. Retentez votre chance demain !";
+                            resultElem.classList.add('fail');
+                            resultElem.style.display = 'block';
                         }
                     });
                 });
