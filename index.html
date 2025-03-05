@@ -174,7 +174,7 @@
             document.getElementById('playBtn').style.background = 'gray';
             document.getElementById('playBtn').style.cursor = 'not-allowed';
             
-            let items = ['🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍺', '🍷', '🍰'];
+            let items = ['🍺', '🍷', '🍰'];
             let slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
             let certificate = document.getElementById('certificate');
 
@@ -206,7 +206,7 @@
         function dropEmoji() {
             let emoji = document.createElement('div');
             emoji.classList.add('emoji');
-            emoji.innerText = '🎉';
+            emoji.innerText = '🎉    🎉    🎉   🎉';
             document.body.appendChild(emoji);
             setTimeout(() => emoji.remove(), 3000);
         }
