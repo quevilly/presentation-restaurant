@@ -448,7 +448,7 @@
         }
 
         // ⬅️ MODIF : ouvrir la fenêtre d’information quand on démarre le 3ᵉ essai
-        if(getTries() === MAX_TRIES){
+        if(Math.min(MAX_TRIES, used + 1) === MAX_TRIES){
           openLastTryNotice();
         }
 
@@ -607,5 +607,6 @@
   </script>
 </body>
 </html>
+
 
 
