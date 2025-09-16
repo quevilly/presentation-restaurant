@@ -1,249 +1,562 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Gourmet</title>
-    <style>
-        body {
-            font-family: 'Georgia', serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: auto;
-        }
-        .header {
-            width: 100%;
-            background: #000;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 24px;
-            font-weight: bold;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .container {
-            position: relative; /* Ajouté pour le positionnement relatif des emojis */
-            overflow: hidden;   /* Pour masquer les emojis en dehors de la case */
-            width: 90%;
-            max-width: 500px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            margin-top: 100px;
-        }
-        h1 { color: #000; font-size: 22px; }
-        p { font-size: 16px; color: #333; }
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
-        #googleBtn { background: #007bff; color: white; }
-        #playBtn {
-            background: gray;
-            color: white;
-            cursor: not-allowed;
-        }
-        .slot-machine-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-top: 20px;
-        }
-        .slot-machine {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            background: #111;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .slot {
-            width: 80px;
-            height: 80px;
-            font-size: 40px;
-            text-align: center;
-            line-height: 80px;
-            background: #fff;
-            border-radius: 10px;
-            border: 4px solid #444;
-            margin: 5px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        .result {
-            font-size: 18px;
-            font-weight: bold;
-            display: none;
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .success { background: #28a745; color: white; }
-        .fail { background: #dc3545; color: white; }
-        .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
-        .footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        /* Style du certificat */
-        #certificate {
-            display: none;
-            background: white;
-            border: 2px solid #28a745;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            font-size: 16px;
-            color: #000;
-        }
-        /* Animation emoji : apparition du haut de la case et disparition sous le bas */
-        .emoji {
-            position: absolute;
-            top: 0; /* Apparait depuis le haut de la case */
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 40px;
-            animation: fallAnimation 3s linear forwards;
-        }
-        @keyframes fallAnimation {
-            from { top: 0; opacity: 1; }
-            to { top: 100%; opacity: 0; } /* Disparaît sous le bas de la case */
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Le Village Ronsard — Jeu Chrono (Mobile)</title>
+  <meta name="description" content="Jeu de précision chronométré — Le Village Ronsard, Paris" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green:#0f3d2e; --green-2:#155643; --gold:#b8902e; --cream:#f7f2e9; --ink:#1d1d1b; --error:#9e1c1c;
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+      --radius: 18px; --radius-lg: 24px;
+      --tap: 14px; /* extra padding for tap targets */
+    }
+    html,body{height:100%}
+    body{
+      margin:0; background:
+        radial-gradient(80% 60% at 100% -10%, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(75% 60% at 0% 110%, rgba(255,255,255,.25), transparent 60%),
+        linear-gradient(160deg, #103228 0%, #0c2a21 100%);
+      color:var(--cream);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      min-height:100vh; display:flex; align-items:flex-start; justify-content:center;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(12px + env(safe-area-inset-bottom)) env(safe-area-inset-left);
+    }
+
+    /* Fixed top bar (opaque) */
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:20;background:var(--green);box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    .topbar-inner{display:flex;gap:10px;align-items:center;justify-content:center;padding:10px 12px}
+    .brandmark{width:64px;height:64px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-family:"Playfair Display", serif;color:var(--gold);font-weight:700;background:rgba(0,0,0,.06)}
+    .topbar h1{font-family:"Playfair Display", serif;color:var(--cream);font-size:clamp(18px,5vw,28px);margin:0}
+
+    /* Gate / messages */
+    .message{ max-width:720px; background:var(--cream); color:var(--ink); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:22px; text-align:center; margin:100px 16px 16px; }
+    h2{ margin:.2rem 0;color:var(--green);font-family:'Playfair Display',serif; font-size:clamp(18px,4.5vw,26px) }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; padding:16px 22px; font-weight:800; text-decoration:none; border-radius:999px; background:var(--green); color:var(--cream); box-shadow:0 10px 28px rgba(15,61,46,.38); transition:transform .06s ease, box-shadow .2s; min-width: min(320px, 90vw); -webkit-tap-highlight-color: transparent; border:0 }
+    .btn:active{ transform: translateY(1px); box-shadow:0 8px 20px rgba(15,61,46,.45) }
+    .btn-ghost{background:transparent;border:2px solid var(--green);color:var(--green)}
+    .btn-gold{background:var(--gold); color:#241d0f}
+    .hint{ font-size:13px; opacity:.85; margin-top:10px }
+    .warn{ color:var(--error); font-weight:700 }
+
+    /* App wrapper */
+    .wrap{max-width:980px;margin:0 auto;padding:100px 20px 20px;display:none;width:100%}
+    header{display:flex;align-items:center;gap:12px;margin:8px 0 10px}
+    header h3{margin:0;font-size:clamp(18px,4.5vw,24px)}
+    .subtitle{opacity:.95;margin-top:2px;font-size:clamp(13px,3.5vw,15px)}
+
+    .card{background:var(--cream);color:var(--ink);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .card .head{background:linear-gradient(180deg, var(--green) 0%, var(--green-2) 100%); color:var(--cream); padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+    .badge{border:1px solid rgba(255,255,255,.45);padding:8px 12px;border-radius:999px;font-size:12px}
+    .body{padding:16px}
+
+    .game{margin-top:0}
+    .timer{font-family:"Playfair Display", serif;font-size:clamp(64px,15vw,128px);text-align:center;margin:8px 0;color:var(--green);transition: transform .25s ease, color .25s ease, text-shadow .25s ease}
+    .controls{position:sticky;bottom:0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:8px 0 0}
+    .controls .btn{flex:1 1 220px;min-height:56px;padding-block:18px}
+
+    .panel{display:grid;gap:14px;grid-template-columns:1fr;max-width:760px;margin:0 auto}
+    .rules{font-size:15px;line-height:1.6;background:#fff;border:1px dashed #d7c9a4;border-radius:14px;padding:14px}
+
+    .stage{position:relative;background:linear-gradient(180deg,#fff, #fbf7ef);border-radius:18px;border:1px solid #e8e1cf;min-height:240px;display:grid;place-items:center;overflow:hidden}
+    .curtain{position:absolute;inset:0;background:linear-gradient(180deg, rgba(15,61,46,.97), rgba(15,61,46,.98));transform:translateY(-100%);transition:transform .5s ease;display:grid;place-items:center}
+    @media (prefers-reduced-motion: reduce){ .curtain{ transition:none } }
+    .curtain.show{transform:translateY(0)}
+    .curtain:after{content:"⟨ Le temps est caché ⟩";color:#d9d1bd;font-family:"Playfair Display",serif;font-size:clamp(16px,4vw,20px);letter-spacing:.4px}
+
+    .result{display:none;margin-top:8px; padding:12px 14px; border-radius:12px; background:#f3efe6; border:1px solid #e0d6bd}
+    .result .value{font-weight:800}
+
+    /* FX canvas + overlays */
+    #fx{position:absolute;inset:0;pointer-events:none}
+    .overlay{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .stamp{display:inline-grid;place-items:center;gap:8px;padding:16px 22px;border-radius:999px;font-weight:900;letter-spacing:.06em;filter:drop-shadow(0 6px 18px rgba(0,0,0,.18));opacity:0;transform:scale(.8)}
+    .stamp.win{background:rgba(21,86,67,.08);border:3px solid #1e8a6b;color:#0f573f}
+    .stamp.fail{background:rgba(158,28,28,.08);border:3px solid #c43a3a;color:#8e1717}
+
+    @keyframes popIn { from { opacity:0; transform:scale(.8) rotate(-4deg)} 50%{opacity:1; transform:scale(1.06) rotate(2deg)} to {opacity:1; transform:scale(1) rotate(0)} }
+    @keyframes shake { 0%,100%{ transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+    @keyframes flashRed { from { box-shadow:inset 0 0 0 0 rgba(196,58,58,.0)} 50%{ box-shadow:inset 0 0 0 8px rgba(196,58,58,.18)} to { box-shadow:inset 0 0 0 0 rgba(196,58,58,.0)} }
+    @keyframes glowRing { from { box-shadow:0 0 0 0 rgba(30,138,107,.0), 0 0 0 0 rgba(30,138,107,.0) } 50%{ box-shadow:0 0 0 14px rgba(30,138,107,.12), 0 0 0 28px rgba(30,138,107,.06)} to { box-shadow:0 0 0 0 rgba(30,138,107,.0), 0 0 0 0 rgba(30,138,107,.0) } }
+
+    .stage.win{animation: glowRing 1000ms ease-out 1}
+    .stage.fail{animation: flashRed 500ms ease-out 1}
+    .timer.win{color:#0f573f; text-shadow:0 6px 24px rgba(15,87,63,.22)}
+    .timer.fail{color:#8e1717; text-shadow:0 6px 24px rgba(142,23,23,.25)}
+    .shake{animation: shake 420ms ease-out 1}
+
+    .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px}
+    .modal{width:min(680px,100%);background:#fff;border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+    .ticket{position:relative;padding:18px}
+    .ticket:before,.ticket:after{content:"";position:absolute;top:0;bottom:0;width:22px;background:repeating-linear-gradient(180deg, #f7f2e9 0 12px, #efe7d6 12px 24px)}
+    .ticket:before{left:-12px;border-right:1px dashed #d4c6a3;border-top-left-radius:16px;border-bottom-left-radius:16px}
+    .ticket:after{right:-12px;border-left:1px dashed #d4c6a3;border-top-right-radius:16px;border-bottom-right-radius:16px}
+    .certhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .certhead h3{margin:0;font-family:"Playfair Display",serif;font-size:24px;color:var(--green)}
+    .certbody{margin-top:10px;display:grid;gap:8px}
+    .row{display:flex;align-items:center;justify-content:space-between;border-bottom:1px dashed #e7dcc2;padding:8px 0;gap:6px}
+    .row b{color:#2a2a26}
+    .certfoot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:12px;flex-wrap:wrap}
+    .mark{display:inline-block;border:2px solid var(--green);color:var(--green);padding:6px 10px;border-radius:8px;font-weight:700}
+    .print-hint{font-size:12px;opacity:.75;margin-top:6px}
+
+    /* Accessibility helpers */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    @media (max-width:480px){ .row{flex-direction:column;align-items:flex-start} }
+    @media print{ body{background:#fff} #gate, .backdrop{display:none} }
+  </style>
 </head>
 <body>
-    <div class="header">Le Gourmet</div>
-    <div class="container">
-        <h1>Gagnez une boisson ou un dessert !</h1>
-        <p>Laissez un avis sur Google et tentez votre chance à notre machine à sous pour remporter un dessert ou une bière !</p>
-        <button id="googleBtn" onclick="visitGoogle()">Laisser un avis sur Google</button>
-        <button id="playBtn" onclick="playSlot()" disabled>Jouer</button>
-        
-        <div class="slot-machine-container">
-            <div class="slot-machine">
-                <div class="slot" id="slot1">❓</div>
-                <div class="slot" id="slot2">❓</div>
-                <div class="slot" id="slot3">❓</div>
-            </div>
+  <!-- Top bar opaque -->
+  <div class="topbar" role="banner">
+    <div class="topbar-inner">
+      <div class="brandmark" aria-hidden="true">VR</div>
+      <h1>Le Village Ronsard — Jeu Chrono</h1>
+    </div>
+  </div>
+
+  <!-- Écran d'accès (un seul bouton) -->
+  <section id="gate" class="message" aria-live="polite" aria-atomic="true">
+    <h2>Déverrouillez le jeu</h2>
+    <p>Pour accéder au jeu, cliquez ci-dessous et laissez un avis sur Google Maps.</p>
+    <a class="btn" id="openMaps" target="_blank" rel="noopener"
+       href="https://www.google.fr/maps/place/Le+Village+Ronsard/@48.8502034,2.3480831,19z/data=!4m11!1m2!2m1!1smaubert+mutualit%C3%A9!3m7!1s0x47e671e6be62f4e1:0x6c4ad3222a595bd!8m2!3d48.8498161!4d2.3481585!9m1!1b1!16s%2Fg%2F1tkbxjsm!5m1!1e1?entry=ttu&g_ep=EgoyMDI1MDkxMC4wIKXMDSoASAFQAw%3D%3D">Laisser un avis Google</a>
+    <div class="hint">Le jeu se déverrouillera automatiquement après l'ouverture de la page d’avis.</div>
+    <div id="triesInfo" class="hint" aria-live="polite"></div>
+    <div id="playedBanner" class="hint" style="display:none"><span class="warn">Nombre d'essais épuisés sur cet appareil.</span></div>
+  </section>
+
+  <!-- JEU (caché tant que non débloqué) -->
+  <div class="wrap" id="app" hidden>
+    <header>
+      <div class="brandmark" aria-hidden="true">VR</div>
+      <div>
+        <h3>Le Village Ronsard</h3>
+        <div class="subtitle">Jeu Chrono — Paris 5ᵉ • Précision & gourmandise</div>
+      </div>
+    </header>
+
+    <section class="card game" id="game" aria-describedby="rules">
+      <div class="head">
+        <div>
+          <strong>Jeu Chrono</strong>
+          <div class="badge">Objectif : arrêter à <b>0,000 s</b> (tolérance 0,100 s)</div>
         </div>
-        <div class="result" id="result"></div>
-        <div id="certificate"></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="badge">Récompense : dessert 🍰 ou boisson 🥤</div>
+          <div class="badge" id="badgeTries">Essai 1/3</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="panel">
+          <div class="stage" aria-live="polite" aria-atomic="true">
+            <canvas id="fx"></canvas>
+            <div class="overlay" aria-hidden="true">
+              <div id="stampWin" class="stamp win" role="img" aria-label="Gagné" hidden>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>GAGNÉ</span>
+              </div>
+              <div id="stampFail" class="stamp fail" role="img" aria-label="Perdu" hidden>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <span>PERDU</span>
+              </div>
+            </div>
+            <div class="timer" id="timer" aria-label="Temps restant">10,000</div>
+            <div class="curtain" id="curtain" aria-hidden="true"></div>
+          </div>
+
+          <div class="controls" role="group" aria-label="Contrôles">
+            <button class="btn" id="startBtn" aria-describedby="startHint">Démarrer</button>
+            <button class="btn btn-gold" id="stopBtn" disabled>STOP</button>
+            <button class="btn btn-ghost" id="replayBtn" disabled>Rejouer</button>
+          </div>
+          <span id="startHint" class="sr-only">Trois essais maximum par appareil. Utilisez STOP pour arrêter le chrono.</span>
+
+          <div class="rules" id="rules">
+            <b>Règles :</b>
+            <ul>
+              <li>Un décompte démarre à <b>10,000 s</b>.</li>
+              <li>À <b>5 s</b> restantes, un rideau masque le temps.</li>
+              <li>Appuyez sur <b>STOP</b> au moment que vous jugez le plus proche de zéro.</li>
+              <li>Si vous êtes entre <b>0,000 s</b> et <b>0,100 s</b>, vous gagnez. Si vous dépassez 0, le chrono passe en négatif.</li>
+              <li class="warn"><b>Important :</b> <u>3 essais maximum par appareil</u>. Le compteur d'essais est indiqué au-dessus.</li>
+            </ul>
+          </div>
+
+          <div class="result" id="result"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL CERTIFICAT -->
+  <div class="backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="certTitle">
+    <div class="modal" role="document">
+      <div class="head" style="padding:14px 18px">
+        <strong id="certTitle">Certificat de gain</strong>
+        <button class="btn btn-ghost" id="closeModal" aria-label="Fermer le certificat">Fermer</button>
+      </div>
+      <div class="body" style="padding:18px">
+        <div class="ticket">
+          <div class="certhead">
+            <h3>Le Village Ronsard — Paris</h3>
+            <span class="mark" id="certMark">GAGNÉ</span>
+          </div>
+          <div class="certbody">
+            <div class="row"><span><b>Résultat</b></span><span id="certTime">—</span></div>
+            <div class="row"><span><b>Gain</b></span><span id="certPrize">—</span></div>
+            <div class="row"><span><b>Date & heure</b></span><span id="certDate">—</span></div>
+            <div class="row"><span><b>Code</b></span><span id="certCode">—</span></div>
+          </div>
+          <div class="certfoot">
+            <small class="print-hint">Présenter ce certificat au comptoir le jour même. Non échangeable, 1 utilisation.</small>
+            <div style="display:flex;gap:8px">
+              <button class="btn" id="printBtn">Imprimer</button>
+              <button class="btn btn-ghost" id="copyBtn">Copier le code</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="footer">
-        <a href="https://www.votresite.com">Visitez notre site</a>
-    </div>
+  </div>
 
-    <script>
-        let canPlay = false;
-        let hasPlayed = false;
+  <script>
+    // ==== CONFIG KEYS (localStorage) ====
+    const LS_UNLOCK = 'village_ronsard_gate_unlocked_v4';
+    const LS_TRIES  = 'village_ronsard_tries_v1'; // number of attempts used (0..3)
+    const MAX_TRIES = 3;
+    const LS_CERT   = 'village_ronsard_last_cert_v1'; // keep last certificate for retrieval
 
-        function visitGoogle() {
-            window.open('https://www.google.com/maps/place/YourBusiness', '_blank');
-            document.getElementById('playBtn').disabled = false;
-            document.getElementById('playBtn').style.background = '#28a745';
-            document.getElementById('playBtn').style.cursor = 'pointer';
-            canPlay = true;
+    // ==== HELPERS ====
+    const canVibrate = 'vibrate' in navigator;
+    const vibe = (pat)=> { try{ if(canVibrate) navigator.vibrate(pat); }catch(_){} };
+    const qs = (sel)=> document.querySelector(sel);
+    const getTries = ()=> { const n = parseInt(localStorage.getItem(LS_TRIES)||'0',10); return isNaN(n)?0:n; };
+    const setTries = (n)=> localStorage.setItem(LS_TRIES, String(n));
+
+    // ====== GATE LOGIC ======
+    (function(){
+      const gate = qs('#gate');
+      const app = qs('#app');
+      const openMaps = qs('#openMaps');
+      const triesInfo = qs('#triesInfo');
+      const playedBanner = qs('#playedBanner');
+
+      function isUnlocked(){ try{ return !!JSON.parse(localStorage.getItem(LS_UNLOCK)); }catch(e){ return false } }
+      function unlock(){ localStorage.setItem(LS_UNLOCK, JSON.stringify({at: Date.now()})); render(); }
+
+      function render(){
+        const unlocked = isUnlocked();
+        const tries = getTries();
+        const remaining = Math.max(0, MAX_TRIES - tries);
+        triesInfo.textContent = `Essais restants sur cet appareil : ${remaining}/${MAX_TRIES}`;
+        playedBanner.style.display = remaining === 0 ? 'block' : 'none';
+        if(unlocked && remaining > 0){
+          gate.style.display = 'none';
+          app.hidden = false; app.style.display='block';
+        } else {
+          gate.style.display = 'block';
+          app.hidden = true; app.style.display='none';
+        }
+      }
+
+      openMaps.addEventListener('click', ()=>{
+        unlock();
+        setTimeout(render, 250);
+      });
+
+      // Option de réinitialisation via query (?reset=1) pour tests internes uniquement
+      try{
+        const u = new URL(location.href);
+        if(u.searchParams.get('reset')==='1'){
+          localStorage.removeItem(LS_UNLOCK);
+          localStorage.removeItem(LS_TRIES);
+          localStorage.removeItem(LS_CERT);
+        }
+      }catch(e){}
+
+      render();
+    })();
+
+    // ====== FX ENGINE (confetti + bursts) ======
+    const FX = (function(){
+      const stage = qs('.stage');
+      const canvas = qs('#fx');
+      const ctx = canvas.getContext('2d');
+      let W=0, H=0, raf=null, particles=[]; let until=0;
+
+      function resize(){
+        const rect = stage.getBoundingClientRect();
+        W = canvas.width = Math.floor(rect.width * devicePixelRatio);
+        H = canvas.height = Math.floor(rect.height * devicePixelRatio);
+        canvas.style.width = rect.width + 'px';
+        canvas.style.height = rect.height + 'px';
+        ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+      }
+      new ResizeObserver(resize).observe(stage);
+
+      function spawnConfetti(n=120){
+        for(let i=0;i<n;i++){
+          particles.push({
+            x: Math.random()*W, y: -20, r: 2+Math.random()*4,
+            vx: (Math.random()-.5)*2.4, vy: 2+Math.random()*2.5,
+            rot: Math.random()*Math.PI, vr: (Math.random()-.5)*0.2,
+            shape: (Math.random()<.5?'rect':'circ'),
+            hue: 20 + Math.random()*60,
+            alpha: .9
+          });
+        }
+      }
+      function spawnBurst(x,y,n=40){
+        for(let i=0;i<n;i++){
+          const a = (i/n)*Math.PI*2;
+          const sp = 2.5+Math.random()*2.5;
+          particles.push({x,y,r:2+Math.random()*3,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:0,vr:0.02,shape:'circ',hue:140+Math.random()*40,alpha:1,fade:.02});
+        }
+      }
+      function clear(){ ctx.clearRect(0,0,W,H); }
+      function step(){
+        const now = performance.now();
+        if(now>until && particles.length===0){ raf=null; return; }
+        clear();
+        for(let i=particles.length-1;i>=0;i--){
+          const p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.rot += p.vr; if(p.fade) p.alpha -= p.fade;
+          ctx.save(); ctx.globalAlpha = Math.max(0,p.alpha||0.9);
+          ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+          ctx.fillStyle = `hsl(${p.hue},85%,55%)`;
+          if(p.shape==='rect'){ ctx.fillRect(-p.r, -p.r, p.r*2, p.r*2); }
+          else { ctx.beginPath(); ctx.arc(0,0,p.r,0,Math.PI*2); ctx.fill(); }
+          ctx.restore();
+          if(p.y>H+20 || p.alpha<=0) particles.splice(i,1);
+        }
+        raf = requestAnimationFrame(step);
+      }
+      function runConfetti(ms=1600){ until = performance.now()+ms; spawnConfetti(); if(!raf) raf=requestAnimationFrame(step); }
+      function runBurst(){ const rect = canvas.getBoundingClientRect(); spawnBurst(rect.width/2, rect.height/2, 44); if(!raf) raf=requestAnimationFrame(step); }
+      function stop(){ particles.length=0; until=0; if(raf){ cancelAnimationFrame(raf); raf=null; } clear(); }
+      return { runConfetti, runBurst, stop };
+    })();
+
+    // ====== GAME LOGIC ======
+    (function(){
+      const timerEl = qs('#timer');
+      const startBtn = qs('#startBtn');
+      const stopBtn = qs('#stopBtn');
+      const replayBtn = qs('#replayBtn');
+      const result = qs('#result');
+      const curtain = qs('#curtain');
+      const badgeTries = qs('#badgeTries');
+      const stage = document.querySelector('.stage');
+      const stampWin = qs('#stampWin');
+      const stampFail = qs('#stampFail');
+
+      let startAt = null; // ms
+      let raf = null;
+      let stopped = false;
+      let finalRemaining = null; // valeur figée au STOP, source de vérité unique
+
+      function updateBadges(){
+        const used = getTries();
+        const currentIndex = Math.min(used + 1, MAX_TRIES);
+        badgeTries.textContent = `Essai ${currentIndex}/${MAX_TRIES}`;
+      }
+
+      function fmt(t){
+        const sign = t < 0 ? '-' : '';
+        const abs = Math.abs(t);
+        return sign + abs.toFixed(3).replace('.', ',');
+      }
+
+      function render(now){
+        if(startAt==null) return;
+        const elapsed = (now - startAt)/1000;
+        const remaining = 10 - elapsed; // secondes
+        timerEl.textContent = fmt(remaining);
+        if(remaining <= 5 && !stopped){ curtain.classList.add('show'); }
+        if(!stopped){ raf = requestAnimationFrame(render); }
+      }
+
+      function resetFX(){
+        stage.classList.remove('win','fail','shake');
+        timerEl.classList.remove('win','fail');
+        stampWin.hidden = true; stampFail.hidden = true;
+        stampWin.style.animation = stampFail.style.animation = 'none';
+        // force reflow to allow replay
+        void stampWin.offsetWidth;
+        FX.stop();
+      }
+
+      function start(){
+        const tries = getTries();
+        if(tries >= MAX_TRIES){
+          result.style.display='block';
+          result.innerHTML = '<span class="warn">Nombre d\'essais épuisés sur cet appareil.</span>';
+          vibe(100);
+          return;
+        }
+        stopped = false; finalRemaining = null;
+        result.style.display='none';
+        curtain.classList.remove('show');
+        resetFX();
+        startAt = performance.now();
+        timerEl.textContent = '10,000';
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        replayBtn.disabled = true;
+        raf && cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(render);
+        vibe([40]); // signal de départ
+      }
+
+      function showWinFX(){
+        stage.classList.add('win');
+        timerEl.classList.add('win');
+        stampWin.hidden = false; stampWin.style.animation = 'popIn 420ms ease-out both';
+        FX.runBurst();
+        FX.runConfetti(1800);
+      }
+      function showFailFX(){
+        stage.classList.add('fail','shake');
+        timerEl.classList.add('fail');
+        stampFail.hidden = false; stampFail.style.animation = 'popIn 360ms ease-out both';
+        // petite pluie d'éclats rouges
+        FX.runBurst();
+      }
+
+      function stop(){
+        if(startAt==null || stopped) return;
+        stopped = true;
+        stopBtn.disabled = true;
+        replayBtn.disabled = true; // pas de rejouer (essai unique par lancement)
+        raf && cancelAnimationFrame(raf);
+
+        const now = performance.now();
+        const elapsed = (now - startAt)/1000;
+        finalRemaining = 10 - elapsed; // s — SOURCE UNIQUE
+
+        curtain.classList.remove('show');
+
+        // FIGE l'affichage du grand chrono sur la même valeur que le calcul
+        timerEl.textContent = fmt(finalRemaining);
+
+        const won = finalRemaining >= 0 && finalRemaining <= 0.100;
+        const status = won ? 'GAGNÉ' : 'PERDU';
+        const msg = won ? '🎉 Bravo !' : 'Raté pour cette fois.';
+        result.innerHTML = `${status} — Vous avez arrêté à <span class="value">${fmt(finalRemaining)} s</span>. ${msg}` + (won ? ' Votre certificat s\'ouvre automatiquement.' : '');
+        result.style.display='block';
+
+        // Haptique selon résultat
+        vibe(won ? [80, 60, 80] : [40]);
+
+        // Nouveaux FX
+        if(matchMedia('(prefers-reduced-motion: no-preference)').matches){
+          won ? showWinFX() : showFailFX();
         }
 
-        function playSlot() {
-            if (!canPlay || hasPlayed) return;
-            hasPlayed = true;
-            document.getElementById('playBtn').disabled = true;
-            document.getElementById('playBtn').style.background = 'gray';
-            document.getElementById('playBtn').style.cursor = 'not-allowed';
-            
-            let items = ['🍺', '🍷', '🍰'];
-            let slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-            let certificate = document.getElementById('certificate');
+        // Incrémente le compteur d'essais à la fin de l'essai (quel que soit le résultat)
+        const used = getTries();
+        setTries(Math.min(MAX_TRIES, used + 1));
+        updateBadges();
 
-            function spin(slot, spins, callback) {
-                let count = 0;
-                let interval = setInterval(() => {
-                    slot.innerText = items[Math.floor(Math.random() * items.length)];
-                    count++;
-                    if (count >= spins) {
-                        clearInterval(interval);
-                        if (callback) callback();
-                    }
-                }, 100);
-            }
+        if(won){ openCertificate(finalRemaining); }
 
-            spin(slots[0], 30, () => {
-                spin(slots[1], 35, () => {
-                    spin(slots[2], 40, () => {
-                        if (slots[0].innerText === slots[1].innerText && slots[1].innerText === slots[2].innerText) {
-                            certificate.innerHTML = `<strong>Félicitations ! Vous avez remporté une expérience gourmande !</strong><br>
-                            Date : ${new Date().toLocaleString()}<br>
-                            Présentez ce certificat au serveur pour réclamer votre prix.`;
-                            certificate.style.display = 'block';
-                            confettiEffect();
-                        } else {
-                            let resultElem = document.getElementById('result');
-                            resultElem.innerHTML = "Dommage, vous n'avez pas gagné cette fois. Retentez votre chance demain !";
-                            resultElem.classList.add('fail');
-                            resultElem.style.display = 'block';
-                        }
-                    });
-                });
-            });
+        // Si essais épuisés, on désactive START
+        if(getTries() >= MAX_TRIES){
+          startBtn.disabled = true;
+        } else {
+          // Autorise un nouveau départ tant qu'il reste des essais
+          startBtn.disabled = false;
         }
+      }
 
-        function dropEmoji() {
-            let emoji = document.createElement('div');
-            emoji.classList.add('emoji');
-            emoji.innerText = '🎉';
-            // Ajout de l'emoji dans le container pour que l'animation soit relative à celui-ci
-            document.querySelector('.container').appendChild(emoji);
-            setTimeout(() => emoji.remove(), 3000);
+      // On ne propose pas de "Rejouer" séparé : START suffit et met à jour l'essai courant
+      replayBtn.style.display = 'none';
+
+      startBtn && startBtn.addEventListener('click', start, { passive: true });
+      stopBtn && stopBtn.addEventListener('click', stop, { passive: true });
+
+      // Espace = STOP (accessibilité clavier)
+      window.addEventListener('keydown', (e)=>{
+        if(e.code==='Space'){
+          e.preventDefault();
+          if(!stopBtn.disabled) stop();
         }
+      }, { passive: false });
 
-        function confettiEffect() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(dropEmoji, i * 500);
-            }
+      // Init badges & état boutons selon essais restants
+      updateBadges();
+      if(getTries() >= MAX_TRIES){
+        startBtn.disabled = true;
+        stopBtn.disabled = true;
+        timerEl.textContent = '— — —';
+      }
+    })();
+
+    // ====== CERTIFICATE MODAL ======
+    (function(){
+      const backdrop = qs('#backdrop');
+      const closeModal = qs('#closeModal');
+      const certTime = qs('#certTime');
+      const certPrize = qs('#certPrize');
+      const certDate = qs('#certDate');
+      const certCode = qs('#certCode');
+      const certMark = qs('#certMark');
+      const printBtn = qs('#printBtn');
+      const copyBtn = qs('#copyBtn');
+
+      window.openCertificate = function(remaining){
+        const prize = Math.random() < 0.5 ? '1 boisson au choix' : '1 dessert maison';
+        const when = new Date();
+        const code = genCode(when, remaining);
+
+        certTime.textContent = `${remaining.toFixed(3).replace('.', ',')} s`;
+        certPrize.textContent = prize;
+        certDate.textContent = when.toLocaleString('fr-FR', { dateStyle:'long', timeStyle:'medium' });
+        certCode.textContent = code;
+        certMark.textContent = 'GAGNÉ';
+
+        try{ localStorage.setItem(LS_CERT, JSON.stringify({ time: certTime.textContent, prize, date: certDate.textContent, code })); }catch(_){ }
+        backdrop.style.display='flex';
+      }
+
+      function genCode(date, t){
+        const base = `${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2,'0')}${date.getDate().toString().padStart(2,'0')}-${date.getHours().toString().padStart(2,'0')}${date.getMinutes().toString().padStart(2,'0')}${date.getSeconds().toString().padStart(2,'0')}-${Math.round(Math.abs(t)*1000).toString().padStart(3,'0')}`;
+        let sum = 0; for(const c of base){ sum = (sum + c.charCodeAt(0)) % 997; }
+        return `VR-${base}-${sum.toString(16).toUpperCase()}`;
+      }
+
+      closeModal && closeModal.addEventListener('click', ()=> backdrop.style.display='none');
+      backdrop && backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop) backdrop.style.display='none' });
+      printBtn && printBtn.addEventListener('click', ()=> window.print());
+      copyBtn && copyBtn.addEventListener('click', ()=> {
+        const text = `${certTime.textContent} • ${certPrize.textContent} • ${certDate.textContent} • ${certCode.textContent}`;
+        navigator.clipboard.writeText(text).then(()=>{
+          copyBtn.textContent = 'Copié !';
+          setTimeout(()=> copyBtn.textContent = 'Copier le code', 1200);
+        });
+      });
+
+      // Recharge : garder le dernier certificat visible si besoin
+      try{
+        const last = JSON.parse(localStorage.getItem(LS_CERT));
+        if(last){
+          certTime.textContent = last.time;
+          certPrize.textContent = last.prize;
+          certDate.textContent = last.date;
+          certCode.textContent = last.code;
         }
-    </script>
-<script>
-    // Vérifie si l'utilisateur a déjà visité la page
-    let lastVisit = localStorage.getItem("lastVisit");
-
-    if (lastVisit) {
-        let now = new Date().getTime();
-        let diff = now - parseInt(lastVisit);
-
-        // 24 heures en millisecondes (60 * 1000)
-        if (diff < 86400000) {
-            document.body.innerHTML = "<h1>Vous avez déjà joué venez retenter votre chance demain!</h1>";
-        }
-    } else {
-        // Enregistre la visite
-        localStorage.setItem("lastVisit", new Date().getTime());
-    }
-</script>
+      }catch(_){ }
+    })();
+  </script>
 </body>
 </html>
